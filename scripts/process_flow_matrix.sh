@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo pwd
-
 # Read the filename
 FILE_TO_READ='flow_matrix.csv'
 
