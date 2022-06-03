@@ -24,7 +24,7 @@ if [ -f ${FILE_TO_READ} ]; then
                 fi
                     sed -i "s|<##PORT##>|${MATRIX[$i + 1]}|g" "${MATRIX[$i]}-ingress.tf"
                     sed -i "s|<##PROTOCOL##>|${MATRIX[$i + 2]}|g" "${MATRIX[$i]}-ingress.tf"
-                    sed -i "s|<##SG_TEMPLATE##>|${MATRIX[$i]}|g" "${MATRIX[$i]}-ingress.tf"
+                    sed -i "s|<##SOURCE##>|${MATRIX[$i + 4]}|g" "${MATRIX[$i]}-ingress.tf"
             fi
         done
     done < <(tail -n +2 ${FILE_TO_READ})
