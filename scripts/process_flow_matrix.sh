@@ -15,26 +15,26 @@ if test -f ${FILE_TO_READ}; then
         for i in "${!MATRIX[@]}"; do
 
             if [ ${csvHeaders[$i]} == 'SECURITY_GROUP' ]; then
-                if ! test -f "${MATRIX[$i]}_ingress.tf"; then
+                if ! test -f "${MATRIX[$i]}-ingress.tf"; then
                     # Add each distinct value to generate security groups after
                     distinct_sg+=(${MATRIX[$i]})
-                    cp 03-template_ingress.tf ./"${MATRIX[$i]}_ingress.tf"
+                    cp 03-template_ingress.tf ./"${MATRIX[$i]}-ingress.tf"
                 else
-                    cat 03-template_ingress.tf >> "${MATRIX[$i]}_ingress.tf"
+                    cat 03-template_ingress.tf >> "${MATRIX[$i]}-ingress.tf"
                 fi
-                    sed -i "s|<##PORT##>|${MATRIX[$i + 1]}|g" "${MATRIX[$i]}_ingress.tf"
-                    sed -i "s|<##PROTOCOL##>|${MATRIX[$i + 2]}|g" "${MATRIX[$i]}_ingress.tf"
-                    sed -i "s|<##SG_TEMPLATE##>|${MATRIX[$i]}|g" "${MATRIX[$i]}_ingress.tf"
+                    sed -i "s|<##PORT##>|${MATRIX[$i + 1]}|g" "${MATRIX[$i]}-ingress.tf"
+                    sed -i "s|<##PROTOCOL##>|${MATRIX[$i + 2]}|g" "${MATRIX[$i]}-ingress.tf"
+                    sed -i "s|<##SG_TEMPLATE##>|${MATRIX[$i]}|g" "${MATRIX[$i]}-ingress.tf"
             fi
         done
     done < <(tail -n +2 ${FILE_TO_READ})
 
     # Build security group
     for i in "${distinct_sg[@]}"; do
-        cp 02-template_sg.tf ${i}_sg.tf
+        cp 02-template_sg.tf ${i}-sg.tf
         # Remplace the variable by the file content
-        sed -i "s|<##INGRESS_RULES##>|$(sed -e 's/[\&/]/\\&/g' -e 's/$/\\n/' ${i}_ingress.tf | tr -d '\n')|g" "${i}_sg.tf"
-        rm ${i}_ingress.tf
+        sed -i "s|<##INGRESS_RULES##>|$(sed -e 's/[\&/]/\\&/g' -e 's/$/\\n/' ${i}_ingress.tf | tr -d '\n')|g" "${i}-sg.tf"
+        rm ${i}-ingress.tf
     done
 else
     echo "File ${FILE_TO_READ} not exists"
