@@ -4,7 +4,7 @@
 FILE_TO_READ='flow_matrix.csv'
 
 # Check if the file exists
-if test -f ${FILE_TO_READ}; then
+if [ -f ${FILE_TO_READ} ]; then
     echo "${FILE_TO_READ} exists."
 
     csvHeaders=('SECURITY_GROUP' 'PORT' 'PROTOCOL' 'TYPE' 'SOURCE')
