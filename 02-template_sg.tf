@@ -1,3 +1,4 @@
+
 resource "aws_security_group" "<##INFRA_NAME##>-SG-WEB" {
         name ="<##INFRA_NAME##>-SG-WEB"
         description = "<##INFRA_NAME##>-SG-WEB"
