@@ -32,6 +32,7 @@ if [ -f ${FILE_TO_READ} ]; then
     # Build security group
     for i in "${distinct_sg[@]}"; do
         cp 02-template_sg.tf ${i}-sg.tf
+        sed -i "s|<##SG##>|${i}|g" "${i}-sg.tf"
         # Remplace the variable by the file content
         sed -i "s|<##INGRESS_RULES##>|$(sed -e 's/[\&/]/\\&/g' -e 's/$/\\n/' ${i}-ingress.tf | tr -d '\n')|g" "${i}-sg.tf"
         rm ${i}-ingress.tf
