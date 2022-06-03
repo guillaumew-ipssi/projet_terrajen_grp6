@@ -33,7 +33,7 @@ if test -f ${FILE_TO_READ}; then
     for i in "${distinct_sg[@]}"; do
         cp 02-template_sg.tf ${i}-sg.tf
         # Remplace the variable by the file content
-        sed -i "s|<##INGRESS_RULES##>|$(sed -e 's/[\&/]/\\&/g' -e 's/$/\\n/' ${i}_ingress.tf | tr -d '\n')|g" "${i}-sg.tf"
+        sed -i "s|<##INGRESS_RULES##>|$(sed -e 's/[\&/]/\\&/g' -e 's/$/\\n/' ${i}-ingress.tf | tr -d '\n')|g" "${i}-sg.tf"
         rm ${i}-ingress.tf
     done
 else
