@@ -24,3 +24,4 @@ fi
 
 cp -R ../0* ${id_new_infra}
 cp ../flow_matrix.csv ${id_new_infra}
+cp ../scripts/process_flow_matrix.sh ${id_new_infra}

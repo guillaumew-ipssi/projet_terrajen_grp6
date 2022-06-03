@@ -4,7 +4,7 @@
 FILE_TO_READ='flow_matrix.csv'
 
 # Check if the file exists
-if test -f ../${FILE_TO_READ}; then
+if test -f ${FILE_TO_READ}; then
     echo "${FILE_TO_READ} exists."
 
     csvHeaders=('SECURITY_GROUP' 'PORT' 'PROTOCOL' 'TYPE' 'SOURCE')
@@ -18,16 +18,16 @@ if test -f ../${FILE_TO_READ}; then
                 if ! test -f "${MATRIX[$i]}_ingress.tf"; then
                     # Add each distinct value to generate security groups after
                     #distinct_sg+=(${MATRIX[$i]})
-                    cp ../03-template_ingress.tf ./"${MATRIX[$i]}_ingress.tf"
+                    cp 03-template_ingress.tf ./"${MATRIX[$i]}_ingress.tf"
                 else
-                    cat ../03-template_ingress.tf >> "${MATRIX[$i]}_ingress.tf"
+                    cat 03-template_ingress.tf >> "${MATRIX[$i]}_ingress.tf"
                 fi
                     sed -i "s|<##PORT##>|${MATRIX[$i + 1]}|g" "${MATRIX[$i]}_ingress.tf"
                     sed -i "s|<##PROTOCOL##>|${MATRIX[$i + 2]}|g" "${MATRIX[$i]}_ingress.tf"
                     sed -i "s|<##SG_TEMPLATE##>|${MATRIX[$i]}|g" "${MATRIX[$i]}_ingress.tf"
             fi
         done
-    done < <(tail -n +2 ../${FILE_TO_READ})
+    done < <(tail -n +2 ${FILE_TO_READ})
 
     # Build security group
     # for i in "${!distinct_sg[@]}"; do
